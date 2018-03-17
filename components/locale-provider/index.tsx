@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
+import classNames from 'classnames';
 import { ModalLocale, changeConfirmLocale } from '../modal/locale';
 
 export interface Locale {
@@ -19,6 +20,9 @@ export interface Locale {
 
 export interface LocaleProviderProps {
   locale: Locale;
+  prefixCls?: string;
+  inline?: boolean;
+  rtl?: boolean;
   children?: React.ReactElement<any>;
 }
 
@@ -33,14 +37,21 @@ function setMomentLocale(locale: Locale) {
 export default class LocaleProvider extends React.Component<LocaleProviderProps, any> {
   static propTypes = {
     locale: PropTypes.object,
+    prefixCls: PropTypes.string,
+    inline: PropTypes.bool,
+    rtl: PropTypes.bool,
   };
 
   static defaultProps = {
     locale: {},
+    prefixCls: 'ant-locale',
+    inline: false,
+    rtl: false,
   };
 
   static childContextTypes = {
     antLocale: PropTypes.object,
+    isRtl: PropTypes.bool,
   };
 
   getChildContext() {
@@ -49,6 +60,7 @@ export default class LocaleProvider extends React.Component<LocaleProviderProps,
         ...this.props.locale,
         exist: true,
       },
+      isRtl: this.props.rtl,
     };
   }
 
@@ -75,6 +87,17 @@ export default class LocaleProvider extends React.Component<LocaleProviderProps,
   }
 
   render() {
-    return React.Children.only(this.props.children);
+    const { rtl, children, inline, prefixCls } = this.props;
+    const direction = rtl ? 'rtl' : 'ltr';
+    const Tag = inline ? 'span' : 'div';
+    const className = classNames(prefixCls, {
+      [`${prefixCls}-rtl`]: !!rtl,
+      [`${prefixCls}-ltr`]: !rtl,
+    });
+    return (
+      <Tag dir={direction} className={className}>
+        {React.Children.only(children)}
+      </Tag>
+    );
   }
 }
