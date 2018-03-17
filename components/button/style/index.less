@@ -36,8 +36,8 @@
       }
     }
 
-    // LTR
-    .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+    // LTR - default
+    :not(.@{locale-prefix}) & {
       .@{btn-prefix-cls}-group &:first-child {
         &:not(:last-child) {
           border-right-color: @btn-group-border;
@@ -123,8 +123,8 @@
     position: relative;
   }
 
-  // LTR
-  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+  // LTR -default
+  :not(.@{locale-prefix}) & {
     &&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
       padding-left: 29px;
       .@{iconfont-css-prefix} {

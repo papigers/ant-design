@@ -37,21 +37,34 @@
   .col(@index) { // initial
     @item: ~".@{ant-prefix}-col@{class}-@{index}";
     .col((@index + 1), @item);
+    .col-ltr((@index + 1), ":not(.@{locale-prefix}-rtl) @{item}");
+    .col-rtl((@index + 1), ".@{locale-prefix}-rtl :not(.@{locale-prefix}-ltr) @{item}");
   }
   .col(@index, @list) when (@index =< @grid-columns) { // general
     @item: ~".@{ant-prefix}-col@{class}-@{index}";
     .col((@index + 1), ~"@{list}, @{item}");
   }
+  .col-ltr(@index, @list) when (@index =< @grid-columns) { // general
+    @item: ~":not(.@{locale-prefix}-rtl) .@{ant-prefix}-col@{class}-@{index}";
+    .col-ltr((@index + 1), ~"@{list}, @{item}");
+  }
+  .col-rtl(@index, @list) when (@index =< @grid-columns) { // general
+    @item: ~".@{locale-prefix}-rtl :not(.@{locale-prefix}) .@{ant-prefix}-col@{class}-@{index}";
+    .col-rtl((@index + 1), ~"@{list}, @{item}");
+  }
   .col(@index, @list) when (@index > @grid-columns) { // terminal
     @{list} {
       flex: 0 0 auto;
-
-      .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
-        float: left;
-      }
-      .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
-        float: right;
-      }
+    }
+  }
+  .col-ltr(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      float: left;
+    }
+  }
+  .col-rtl(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      float: right;
     }
   }
   .col(1); // kickstart it
@@ -64,7 +77,7 @@
     box-sizing: border-box;
     width: percentage((@index / @grid-columns));
   }
-  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+  :not(.@{locale-prefix}-rtl) & {
     .@{ant-prefix}-col@{class}-push-@{index} {
       left: percentage((@index / @grid-columns));
     }
@@ -96,7 +109,7 @@
   .@{ant-prefix}-col@{class}-@{index} {
     display: none;
   }
-  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+  :not(.@{locale-prefix}) & {
     .@{ant-prefix}-col-push-@{index} {
       left: auto;
     }

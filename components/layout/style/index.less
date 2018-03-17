@@ -2,6 +2,7 @@
 @import "../../style/mixins/index";
 
 @layout-prefix-cls: ~"@{ant-prefix}-layout";
+@locale-prefix-cls: ~"@{ant-prefix}-locale";
 
 .@{layout-prefix-cls} {
   display: flex;
@@ -91,7 +92,6 @@
       &-trigger {
         position: absolute;
         top: @layout-header-height;
-        right: -@layout-zero-trigger-width;
         text-align: center;
         width: @layout-zero-trigger-width;
         height: @layout-zero-trigger-height;
@@ -105,6 +105,16 @@
 
         &:hover {
           background: tint(@layout-sider-background, 10%);
+        }
+
+        // LTR - default
+        :not(.@{locale-prefix-cls}) & {
+          right: -@layout-zero-trigger-width;
+        }
+
+        // RTL
+        .@{locale-prefix-cls}-rtl :not(.@{locale-prefix-cls}) & {
+          left: -@layout-zero-trigger-width;
         }
       }
     }
