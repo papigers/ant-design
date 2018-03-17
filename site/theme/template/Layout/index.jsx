@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
+import { LocaleProvider } from 'antd';
 import Header from './Header';
 import Footer from './Footer';
 import enLocale from '../../en-US';
@@ -79,13 +80,15 @@ export default class Layout extends React.Component {
     const { children, ...restProps } = this.props;
     const { appLocale } = this.state;
     return (
-      <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-        <div className="page-wrapper">
-          <Header {...restProps} />
-          {children}
-          <Footer {...restProps} />
-        </div>
-      </IntlProvider>
+      <LocaleProvider rtl>
+        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
+          <div className="page-wrapper">
+            <Header {...restProps} />
+            {children}
+            <Footer {...restProps} />
+          </div>
+        </IntlProvider>
+      </LocaleProvider>
     );
   }
 }

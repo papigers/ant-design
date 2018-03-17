@@ -4,6 +4,7 @@
 @import "./mixin";
 
 @search-prefix: ~"@{ant-prefix}-input-search";
+@locale-prefix: ~"@{ant-prefix}-locale";
 
 .@{search-prefix} {
   &-icon {
@@ -11,23 +12,53 @@
     color: @text-color-secondary;
   }
 
-  &:not(&-small) > .@{ant-prefix}-input-suffix {
-    right: @control-padding-horizontal;
-  }
-
   > .@{ant-prefix}-input-suffix > .@{search-prefix}-button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
     > .@{iconfont-css-prefix}-search {
       font-size: @font-size-lg;
     }
   }
+}
 
-  &.@{search-prefix}-enter-button > .@{ant-prefix}-input {
-    padding-right: 46px;
+// LTR
+.@{locale-prefix}-ltr :not(.@{locale-prefix}) {
+  .@{search-prefix} {
+    &:not(&-small) > .@{ant-prefix}-input-suffix {
+      right: @control-padding-horizontal;
+    }
+
+    > .@{ant-prefix}-input-suffix > .@{search-prefix}-button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &.@{search-prefix}-enter-button > .@{ant-prefix}-input {
+      padding-right: 46px;
+    }
+
+    &.@{search-prefix}-enter-button > .@{ant-prefix}-input-suffix {
+      right: 0;
+    }
   }
+}
 
-  &.@{search-prefix}-enter-button > .@{ant-prefix}-input-suffix {
-    right: 0;
+// RTL
+.@{locale-prefix}-rtl :not(.@{locale-prefix}) {
+  .@{search-prefix} {
+    :not(&-small) > .@{ant-prefix}-input-suffix {
+      left: @control-padding-horizontal;
+    }
+
+    > .@{ant-prefix}-input-suffix > .@{search-prefix}-button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.@{search-prefix}-enter-button > .@{ant-prefix}-input {
+      padding-left: 46px;
+    }
+
+    &.@{search-prefix}-enter-button > .@{ant-prefix}-input-suffix {
+      left: 0;
+    }
   }
 }

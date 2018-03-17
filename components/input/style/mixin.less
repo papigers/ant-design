@@ -1,6 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
+@locale-prefix: ~"@{ant-prefix}-locale";
 @input-affix-width: 19px;
 
 // size mixins for input
@@ -94,18 +95,18 @@
   border-spacing: 0;
   width: 100%;
 
+  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+    .input-group-ltr(@inputClass);
+  }
+  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
+    .input-group-rtl(@inputClass);
+  }
+
   // Undo padding and float of grid classes
   &[class*="col-"] {
     float: none;
     padding-left: 0;
     padding-right: 0;
-  }
-
-  > [class*="col-"] {
-    padding-right: 8px;
-    &:last-child {
-      padding-right: 0;
-    }
   }
 
   &-addon,
@@ -130,7 +131,6 @@
   }
 
   .@{inputClass} {
-    float: left;
     width: 100%;
     margin-bottom: 0;
     &:focus {
@@ -182,6 +182,73 @@
     }
   }
 
+  // Sizing options
+  &-lg .@{inputClass},
+  &-lg > &-addon {
+    .input-lg();
+  }
+
+  &-sm .@{inputClass},
+  &-sm > &-addon {
+    .input-sm();
+  }
+
+  // Fix https://github.com/ant-design/ant-design/issues/5754
+  &-lg .@{ant-prefix}-select-selection--single {
+    height: @input-height-lg;
+  }
+
+  &-sm .@{ant-prefix}-select-selection--single {
+    height: @input-height-sm;
+  }
+
+  .@{inputClass}-affix-wrapper {
+    display: table-cell;
+    width: 100%;
+  }
+
+  &&-compact {
+    display: block;
+    .clearfix;
+
+    & > * {
+      border-radius: 0;
+      vertical-align: top; // https://github.com/ant-design/ant-design-pro/issues/139
+      float: none;
+      display: inline-block;
+    }
+
+    // Undo float for .ant-input-group .ant-input
+    .@{inputClass} {
+      float: none;
+      z-index: auto;
+    }
+
+    // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+    & > .@{ant-prefix}-select > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker .@{ant-prefix}-time-picker-input {
+      border-radius: 0;
+    }
+  }
+}
+
+.input-group-ltr(@inputClass) {
+  > [class*="col-"] {
+    padding-right: 8px;
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  .@{inputClass},
+  .@{inputClass}-affix-wrapper {
+    float: left;
+  }
+
   // Reset rounded corners
   > .@{inputClass}:first-child,
   &-addon:first-child {
@@ -226,48 +293,9 @@
     }
   }
 
-  // Sizing options
-  &-lg .@{inputClass},
-  &-lg > &-addon {
-    .input-lg();
-  }
-
-  &-sm .@{inputClass},
-  &-sm > &-addon {
-    .input-sm();
-  }
-
-  // Fix https://github.com/ant-design/ant-design/issues/5754
-  &-lg .@{ant-prefix}-select-selection--single {
-    height: @input-height-lg;
-  }
-
-  &-sm .@{ant-prefix}-select-selection--single {
-    height: @input-height-sm;
-  }
-
-  .@{inputClass}-affix-wrapper {
-    display: table-cell;
-    width: 100%;
-    float: left;
-  }
-
   &&-compact {
-    display: block;
-    .clearfix;
-
     & > * {
-      border-radius: 0;
       border-right-width: 0;
-      vertical-align: top; // https://github.com/ant-design/ant-design-pro/issues/139
-      float: none;
-      display: inline-block;
-    }
-
-    // Undo float for .ant-input-group .ant-input
-    .@{inputClass} {
-      float: none;
-      z-index: auto;
     }
 
     // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
@@ -277,7 +305,6 @@
     & > .@{ant-prefix}-cascader-picker .@{ant-prefix}-input,
     & > .@{ant-prefix}-mention-wrapper .@{ant-prefix}-mention-editor,
     & > .@{ant-prefix}-time-picker .@{ant-prefix}-time-picker-input {
-      border-radius: 0;
       border-right-width: 0;
     }
 
@@ -306,10 +333,114 @@
   }
 }
 
+.input-group-rtl(@inputClass) {
+  > [class*="col-"] {
+    padding-left: 8px;
+    &:last-child {
+      padding-left: 0;
+    }
+  }
+
+  .@{inputClass},
+  .@{inputClass}-affix-wrapper {
+    float: right;
+  }
+
+  // Reset rounded corners
+  > .@{inputClass}:first-child,
+  &-addon:first-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+
+    // Reset Select's style in addon
+    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  > .@{inputClass}-affix-wrapper {
+    &:not(:first-child) .@{inputClass} {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    &:not(:last-child) .@{inputClass} {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  &-addon:first-child {
+    border-left: 0;
+  }
+  &-addon:last-child {
+    border-right: 0;
+  }
+
+  > .@{inputClass}:last-child,
+  &-addon:last-child {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    // Reset Select's style in addon
+    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  &&-compact {
+    & > * {
+      border-left-width: 0;
+    }
+
+    // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+    & > .@{ant-prefix}-select > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker .@{ant-prefix}-time-picker-input {
+      border-left-width: 0;
+    }
+
+    & > *:first-child,
+    & > .@{ant-prefix}-select:first-child > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper:first-child .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker:first-child .@{ant-prefix}-time-picker-input {
+      border-top-right-radius: @border-radius-base;
+      border-bottom-right-radius: @border-radius-base;
+    }
+
+    & > *:last-child,
+    & > .@{ant-prefix}-select:last-child > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper:last-child .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker:last-child .@{ant-prefix}-time-picker-input {
+      border-top-left-radius: @border-radius-base;
+      border-bottom-left-radius: @border-radius-base;
+      border-left-width: 1px;
+    }
+  }
+}
+
 .input-affix-wrapper(@inputClass) {
   position: relative;
   display: inline-block;
   width: 100%;
+
+  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+    .input-affix-wrapper-ltr(@inputClass);
+  }
+  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
+    .input-affix-wrapper-rtl(@inputClass);
+  }
 
   .@{inputClass} {
     z-index: 1;
@@ -328,7 +459,9 @@
     line-height: 0;
     color: @input-color;
   }
+}
 
+.input-affix-wrapper-ltr(@inputClass) {
   .@{inputClass}-prefix {
     left: @input-padding-horizontal-base + 1px;
   }
@@ -343,5 +476,23 @@
 
   .@{inputClass}:not(:last-child) {
     padding-right: @input-padding-horizontal-base + @input-affix-width;
+  }
+}
+
+.input-affix-wrapper-rtl(@inputClass) {
+  .@{inputClass}-prefix {
+    right: @input-padding-horizontal-base + 1px;
+  }
+
+  .@{inputClass}-suffix {
+    left: @input-padding-horizontal-base + 1px;
+  }
+
+  .@{inputClass}:not(:first-child) {
+    padding-right: @input-padding-horizontal-base + @input-affix-width;
+  }
+
+  .@{inputClass}:not(:last-child) {
+    padding-left: @input-padding-horizontal-base + @input-affix-width;
   }
 }
