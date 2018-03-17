@@ -242,55 +242,102 @@
 .btn-group(@btnClassName: btn) {
   .button-group-base(@btnClassName);
 
-  .@{btnClassName} + .@{btnClassName},
-  .@{btnClassName} + &,
-  span + .@{btnClassName},
-  .@{btnClassName} + span,
-  & + .@{btnClassName},
-  & + & {
-    margin-left: -1px;
-  }
-
-  .@{btnClassName}:not(:first-child):not(:last-child) {
-    border-radius: 0;
-  }
-
-  > .@{btnClassName}:first-child,
-  > span:first-child > .@{btnClassName} {
-    margin-left: 0;
-  }
-
-  > .@{btnClassName}:first-child:not(:last-child),
-  > span:first-child:not(:last-child) > .@{btnClassName} {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  > .@{btnClassName}:last-child:not(:first-child),
-  > span:last-child:not(:first-child) > .@{btnClassName} {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-  }
-
-  & > & {
-    float: left;
-  }
-
+  .@{btnClassName}:not(:first-child):not(:last-child),
   & > &:not(:first-child):not(:last-child) > .@{btnClassName} {
     border-radius: 0;
   }
 
-  & > &:first-child:not(:last-child) {
-    > .@{btnClassName}:last-child {
+  // LTR
+  .@{locale-prefix}-ltr :not(.@{locale-prefix}) & {
+    .@{btnClassName} + .@{btnClassName},
+    .@{btnClassName} + &,
+    span + .@{btnClassName},
+    .@{btnClassName} + span,
+    & + .@{btnClassName},
+    & + & {
+      margin-left: -1px;
+    }
+
+    > .@{btnClassName}:first-child,
+    > span:first-child > .@{btnClassName} {
+      margin-left: 0;
+    }
+
+    > .@{btnClassName}:first-child:not(:last-child),
+    > span:first-child:not(:last-child) > .@{btnClassName} {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    > .@{btnClassName}:last-child:not(:first-child),
+    > span:last-child:not(:first-child) > .@{btnClassName} {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    & > & {
+      float: left;
+    }
+
+    & > &:first-child:not(:last-child) {
+      > .@{btnClassName}:last-child {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        padding-right: 8px;
+      }
+    }
+
+    & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      padding-left: 8px;
+    }
+  }
+
+  // RTL
+  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
+    .@{btnClassName} + .@{btnClassName},
+    .@{btnClassName} + &,
+    span + .@{btnClassName},
+    .@{btnClassName} + span,
+    & + .@{btnClassName},
+    & + & {
+      margin-right: -1px;
+    }
+
+    > .@{btnClassName}:first-child,
+    > span:first-child > .@{btnClassName} {
+      margin-right: 0;
+    }
+
+    > .@{btnClassName}:first-child:not(:last-child),
+    > span:first-child:not(:last-child) > .@{btnClassName} {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    > .@{btnClassName}:last-child:not(:first-child),
+    > span:last-child:not(:first-child) > .@{btnClassName} {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    & > & {
+      float: right;
+    }
+
+    & > &:first-child:not(:last-child) {
+      > .@{btnClassName}:last-child {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        padding-left: 8px;
+      }
+    }
+
+    & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       padding-right: 8px;
     }
-  }
-
-  & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    padding-left: 8px;
   }
 }
