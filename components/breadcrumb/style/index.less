@@ -2,6 +2,7 @@
 @import "../../style/mixins/index";
 
 @breadcrumb-prefix-cls: ~"@{ant-prefix}-breadcrumb";
+@locale-prefix-cls: ~"@{ant-prefix}-locale";
 
 .@{breadcrumb-prefix-cls} {
   .reset-component;
@@ -33,9 +34,19 @@
     color: @breadcrumb-separator-color;
   }
 
-  &-link {
-    > .@{iconfont-css-prefix} + span {
+  :not(.@{locale-prefix-cls}-rtl) & {
+    &-link > .@{iconfont-css-prefix} + span {
       margin-left: 4px;
+    }
+  }
+
+  .@{locale-prefix-cls}-rtl :not(.@{locale-prefix-cls}) & {
+    &-link > .@{iconfont-css-prefix} + span {
+      margin-right: 4px;
+    }
+
+    > span {
+      float: right;
     }
   }
 }
