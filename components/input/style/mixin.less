@@ -1,7 +1,6 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@locale-prefix: ~"@{ant-prefix}-locale";
 @input-affix-width: 19px;
 
 // size mixins for input
@@ -95,10 +94,10 @@
   border-spacing: 0;
   width: 100%;
 
-  :not(.@{locale-prefix}) & {
+  &:not(&-rtl) {
     .input-group-ltr(@inputClass);
   }
-  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
+  &&-rtl {
     .input-group-rtl(@inputClass);
   }
 
@@ -251,7 +250,7 @@
 
   // Reset rounded corners
   > .@{inputClass}:first-child,
-  &-addon:first-child {
+  .@{ant-prefix}-input-group-addon:first-child {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 
@@ -274,15 +273,15 @@
     }
   }
 
-  &-addon:first-child {
+  .@{ant-prefix}-input-group-addon:first-child {
     border-right: 0;
   }
-  &-addon:last-child {
+  .@{ant-prefix}-input-group-addon:last-child {
     border-left: 0;
   }
 
   > .@{inputClass}:last-child,
-  &-addon:last-child {
+  .@{ant-prefix}-input-group-addon:last-child {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 
@@ -293,7 +292,7 @@
     }
   }
 
-  &&-compact {
+  &.@{ant-prefix}-input-group-compact {
     & > * {
       border-right-width: 0;
     }
@@ -348,7 +347,7 @@
 
   // Reset rounded corners
   > .@{inputClass}:first-child,
-  &-addon:first-child {
+  .@{ant-prefix}-input-group-addon:first-child {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 
@@ -371,15 +370,15 @@
     }
   }
 
-  &-addon:first-child {
+  .@{ant-prefix}-input-group-addon:first-child {
     border-left: 0;
   }
-  &-addon:last-child {
+  .@{ant-prefix}-input-group-addon:last-child {
     border-right: 0;
   }
 
   > .@{inputClass}:last-child,
-  &-addon:last-child {
+  .@{ant-prefix}-input-group-addon:last-child {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 
@@ -390,7 +389,7 @@
     }
   }
 
-  &&-compact {
+  &.@{ant-prefix}-input-group-compact {
     & > * {
       border-left-width: 0;
     }
@@ -435,10 +434,10 @@
   display: inline-block;
   width: 100%;
 
-  :not(.@{locale-prefix}) & {
+  &:not(&-rtl) {
     .input-affix-wrapper-ltr(@inputClass);
   }
-  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
+  &&-rtl {
     .input-affix-wrapper-rtl(@inputClass);
   }
 

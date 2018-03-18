@@ -1,7 +1,5 @@
 @import "../../style/mixins/index";
 
-@locale-prefix: ~"@{ant-prefix}-locale";
-
 // mixins for grid system
 // ------------------------
 .make-row(@gutter: @grid-gutter-width) {
@@ -37,28 +35,19 @@
   .col(@index) { // initial
     @item: ~".@{ant-prefix}-col@{class}-@{index}";
     .col((@index + 1), @item);
-    .col-ltr((@index + 1), ":not(.@{locale-prefix}-rtl) @{item}");
-    .col-rtl((@index + 1), ".@{locale-prefix}-rtl :not(.@{locale-prefix}-ltr) @{item}");
+    .col-rtl((@index + 1), "@{item}.@{ant-prefix}-col-rtl");
   }
   .col(@index, @list) when (@index =< @grid-columns) { // general
     @item: ~".@{ant-prefix}-col@{class}-@{index}";
     .col((@index + 1), ~"@{list}, @{item}");
   }
-  .col-ltr(@index, @list) when (@index =< @grid-columns) { // general
-    @item: ~":not(.@{locale-prefix}-rtl) .@{ant-prefix}-col@{class}-@{index}";
-    .col-ltr((@index + 1), ~"@{list}, @{item}");
-  }
   .col-rtl(@index, @list) when (@index =< @grid-columns) { // general
-    @item: ~".@{locale-prefix}-rtl :not(.@{locale-prefix}) .@{ant-prefix}-col@{class}-@{index}";
+    @item: ~".@{ant-prefix}-col@{class}-@{index}.@{ant-prefix}-col-rtl";
     .col-rtl((@index + 1), ~"@{list}, @{item}");
   }
   .col(@index, @list) when (@index > @grid-columns) { // terminal
     @{list} {
       flex: 0 0 auto;
-    }
-  }
-  .col-ltr(@index, @list) when (@index > @grid-columns) { // terminal
-    @{list} {
       float: left;
     }
   }
@@ -77,27 +66,19 @@
     box-sizing: border-box;
     width: percentage((@index / @grid-columns));
   }
-  :not(.@{locale-prefix}-rtl) & {
-    .@{ant-prefix}-col@{class}-push-@{index} {
-      left: percentage((@index / @grid-columns));
-    }
-    .@{ant-prefix}-col@{class}-pull-@{index} {
-      right: percentage((@index / @grid-columns));
-    }
-    .@{ant-prefix}-col@{class}-offset-@{index} {
-      margin-left: percentage((@index / @grid-columns));
-    }
+  .@{ant-prefix}-col@{class}-push-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col@{class}-pull-@{index}.@{ant-prefix}-col-rtl {
+    left: percentage((@index / @grid-columns));
   }
-  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
-    .@{ant-prefix}-col@{class}-push-@{index} {
-      right: percentage((@index / @grid-columns));
-    }
-    .@{ant-prefix}-col@{class}-pull-@{index} {
-      left: percentage((@index / @grid-columns));
-    }
-    .@{ant-prefix}-col@{class}-offset-@{index} {
-      margin-right: percentage((@index / @grid-columns));
-    }
+  .@{ant-prefix}-col@{class}-pull-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col@{class}-push-@{index}.@{ant-prefix}-col-rtl {
+    right: percentage((@index / @grid-columns));
+  }
+  .@{ant-prefix}-col@{class}-offset-@{index}:not(.@{ant-prefix}-col-rtl) {
+    margin-left: percentage((@index / @grid-columns));
+  }
+  .@{ant-prefix}-col@{class}-offset-@{index}.@{ant-prefix}-col-rtl {
+    margin-right: percentage((@index / @grid-columns));
   }
   .@{ant-prefix}-col@{class}-order-@{index} {
     order: @index;
@@ -109,39 +90,23 @@
   .@{ant-prefix}-col@{class}-@{index} {
     display: none;
   }
-  :not(.@{locale-prefix}) & {
-    .@{ant-prefix}-col-push-@{index} {
-      left: auto;
-    }
-    .@{ant-prefix}-col-pull-@{index} {
-      right: auto;
-    }
-    .@{ant-prefix}-col@{class}-push-@{index} {
-      left: auto;
-    }
-    .@{ant-prefix}-col@{class}-pull-@{index} {
-      right: auto;
-    }
-    .@{ant-prefix}-col@{class}-offset-@{index} {
-      margin-left: 0;
-    }
+  .@{ant-prefix}-col-push-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col@{class}-push-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col-pull-@{index}.@{ant-prefix}-col-rtl,
+  .@{ant-prefix}-col@{class}-pull-@{index}.@{ant-prefix}-col-rtl {
+    left: auto;
   }
-  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
-    .@{ant-prefix}-col-push-@{index} {
-      right: auto;
-    }
-    .@{ant-prefix}-col-pull-@{index} {
-      left: auto;
-    }
-    .@{ant-prefix}-col@{class}-push-@{index} {
-      right: auto;
-    }
-    .@{ant-prefix}-col@{class}-pull-@{index} {
-      left: auto;
-    }
-    .@{ant-prefix}-col@{class}-offset-@{index} {
-      margin-right: 0;
-    }
+  .@{ant-prefix}-col-pull-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col@{class}-pull-@{index}:not(.@{ant-prefix}-col-rtl),
+  .@{ant-prefix}-col-push-@{index}.@{ant-prefix}-col-rtl,
+  .@{ant-prefix}-col@{class}-push-@{index}.@{ant-prefix}-col-rtl {
+    right: auto;
+  }
+  .@{ant-prefix}-col@{class}-offset-@{index}:not(.@{ant-prefix}-col-rtl) {
+    margin-left: 0;
+  }
+  .@{ant-prefix}-col@{class}-offset-@{index}.@{ant-prefix}-col-rtl {
+    margin-right: 0;
   }
   .@{ant-prefix}-col@{class}-order-@{index} {
     order: 0;

@@ -86,6 +86,10 @@ export default class Input extends React.Component<InputProps, any> {
     suffix: PropTypes.node,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   input: HTMLInputElement;
 
   handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -108,10 +112,12 @@ export default class Input extends React.Component<InputProps, any> {
 
   getInputClassName() {
     const { prefixCls, size, disabled } = this.props;
+    const { isRtl } = this.context;
     return classNames(prefixCls, {
       [`${prefixCls}-sm`]: size === 'small',
       [`${prefixCls}-lg`]: size === 'large',
       [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-rtl`]: isRtl,
     });
   }
 
@@ -142,6 +148,8 @@ export default class Input extends React.Component<InputProps, any> {
 
     const className = classNames(`${props.prefixCls}-wrapper`, {
       [wrapperClassName]: (addonBefore || addonAfter),
+      [`${wrapperClassName}-rtl`]: (addonBefore || addonAfter) && this.context.isRtl,
+      [`${props.prefixCls}-wrapper-rtl`]: this.context.isRtl,
     });
 
     const groupClassName = classNames(`${props.prefixCls}-group-wrapper`, {
@@ -195,6 +203,7 @@ export default class Input extends React.Component<InputProps, any> {
     const affixWrapperCls = classNames(props.className, `${props.prefixCls}-affix-wrapper`, {
       [`${props.prefixCls}-affix-wrapper-sm`]: props.size === 'small',
       [`${props.prefixCls}-affix-wrapper-lg`]: props.size === 'large',
+      [`${props.prefixCls}-affix-wrapper-rtl`]: this.context.isRtl,
     });
     return (
       <span

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Input, { InputProps } from './Input';
 import Icon from '../icon';
@@ -15,6 +16,10 @@ export default class Search extends React.Component<SearchProps, any> {
     inputPrefixCls: 'ant-input',
     prefixCls: 'ant-input-search',
     enterButton: false,
+  };
+
+  static contextTypes = {
+    isRtl: PropTypes.bool,
   };
 
   private input: Input;
@@ -58,6 +63,7 @@ export default class Search extends React.Component<SearchProps, any> {
     const inputClassName = classNames(prefixCls, className, {
       [`${prefixCls}-enter-button`]: !!enterButton,
       [`${prefixCls}-${size}`]: !!size,
+      [`${prefixCls}-rtl`]: this.context.isRtl,
     });
     return (
       <Input

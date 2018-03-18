@@ -45,6 +45,10 @@ export default class Col extends React.Component<ColProps, {}> {
     xxl: objectOrNumber,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   render() {
     const props: any = this.props;
     const { span, order, offset, push, pull, className, children, prefixCls = 'ant-col', ...others } = props;
@@ -68,12 +72,14 @@ export default class Col extends React.Component<ColProps, {}> {
         [`${prefixCls}-${size}-pull-${sizeProps.pull}`]: sizeProps.pull || sizeProps.pull === 0,
       };
     });
+
     const classes = classNames({
       [`${prefixCls}-${span}`]: span !== undefined,
       [`${prefixCls}-order-${order}`]: order,
       [`${prefixCls}-offset-${offset}`]: offset,
       [`${prefixCls}-push-${push}`]: push,
       [`${prefixCls}-pull-${pull}`]: pull,
+      [`${prefixCls}-rtl`]: this.context.isRtl,
     }, className, sizeClassObj);
 
     return <div {...others} className={classes}>{children}</div>;

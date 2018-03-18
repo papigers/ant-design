@@ -82,6 +82,7 @@ export default class Sider extends React.Component<SiderProps, SliderState> {
 
   static contextTypes = {
     siderHook: PropTypes.object,
+    isRtl: PropTypes.bool,
   };
 
   private mql: MediaQueryList;
@@ -213,6 +214,7 @@ export default class Sider extends React.Component<SiderProps, SliderState> {
       [`${prefixCls}-has-trigger`]: collapsible && trigger !== null && !zeroWidthTrigger,
       [`${prefixCls}-below`]: !!this.state.below,
       [`${prefixCls}-zero-width`]: siderWidth === 0 || siderWidth === '0' || siderWidth === '0px',
+      [`${prefixCls}-rtl`]: this.context.isRtl,
     });
     return (
       <div className={siderCls} {...divProps} style={divStyle}>

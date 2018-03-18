@@ -57,6 +57,10 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
     nameRender: PropTypes.func,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   componentDidMount() {
     const props = this.props;
     warning(
@@ -104,8 +108,13 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
         });
       });
     }
+
+    const classes = classNames(className, prefixCls, {
+      [`${prefixCls}-rtl`]: this.context.isRtl,
+    });
+
     return (
-      <div className={classNames(className, prefixCls)} style={style}>
+      <div className={classes} style={style}>
         {crumbs}
       </div>
     );

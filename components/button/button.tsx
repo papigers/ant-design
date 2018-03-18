@@ -82,6 +82,10 @@ export default class Button extends React.Component<ButtonProps, any> {
     icon: PropTypes.string,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   timeout: number;
   delayTimeout: number;
 
@@ -177,6 +181,7 @@ export default class Button extends React.Component<ButtonProps, any> {
       [`${prefixCls}-clicked`]: clicked,
       [`${prefixCls}-background-ghost`]: ghost,
       [`${prefixCls}-two-chinese-chars`]: hasTwoCNChar,
+      [`${prefixCls}-rtl`]: this.context.isRtl,
     });
 
     const iconType = loading ? 'loading' : icon;

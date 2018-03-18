@@ -2,7 +2,6 @@
 @import "../../style/mixins/index";
 
 @layout-prefix-cls: ~"@{ant-prefix}-layout";
-@locale-prefix-cls: ~"@{ant-prefix}-locale";
 
 .@{layout-prefix-cls} {
   display: flex;
@@ -108,12 +107,12 @@
         }
 
         // LTR - default
-        :not(.@{locale-prefix-cls}) & {
+        &:not(.@{layout-prefix-cls}-sider-rtl) {
           right: -@layout-zero-trigger-width;
         }
 
         // RTL
-        .@{locale-prefix-cls}-rtl :not(.@{locale-prefix-cls}) & {
+        &.@{layout-prefix-cls}-sider-rtl {
           left: -@layout-zero-trigger-width;
         }
       }

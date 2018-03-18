@@ -3,7 +3,6 @@
 @import "./mixin";
 
 @btn-prefix-cls: ~"@{ant-prefix}-btn";
-@locale-prefix: ~"@{ant-prefix}-locale";
 
 // for compatibile
 @btn-ghost-color: @text-color;
@@ -37,18 +36,26 @@
     }
 
     // LTR - default
-    :not(.@{locale-prefix}) & {
-      .@{btn-prefix-cls}-group &:first-child {
-        &:not(:last-child) {
-          border-right-color: @btn-group-border;
-          &[disabled] {
-            border-right-color: @btn-default-border;
-          }
+    .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-rtl) &:first-child {
+      &:not(:last-child) {
+        border-right-color: @btn-group-border;
+        &[disabled] {
+          border-right-color: @btn-default-border;
         }
       }
+    }
 
-      .@{btn-prefix-cls}-group &:last-child:not(:first-child),
-      .@{btn-prefix-cls}-group & + & {
+    .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-rtl) &:last-child:not(:first-child),
+    .@{btn-prefix-cls}-group:not(.@{btn-prefix-cls}-group-rtl) & + & {
+      border-left-color: @btn-group-border;
+      &[disabled] {
+        border-left-color: @btn-default-border;
+      }
+    }
+
+    // RTL
+    .@{btn-prefix-cls}-group.@{btn-prefix-cls}-group-rtl &:first-child {
+      &:not(:last-child) {
         border-left-color: @btn-group-border;
         &[disabled] {
           border-left-color: @btn-default-border;
@@ -56,23 +63,11 @@
       }
     }
 
-    // RTL
-    .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
-      .@{btn-prefix-cls}-group &:first-child {
-        &:not(:last-child) {
-          border-left-color: @btn-group-border;
-          &[disabled] {
-            border-left-color: @btn-default-border;
-          }
-        }
-      }
-
-      .@{btn-prefix-cls}-group &:last-child:not(:first-child),
-      .@{btn-prefix-cls}-group & + & {
-        border-right-color: @btn-group-border;
-        &[disabled] {
-          border-right-color: @btn-default-border;
-        }
+    .@{btn-prefix-cls}-group.@{btn-prefix-cls}-group-rtl &:last-child:not(:first-child),
+    .@{btn-prefix-cls}-group.@{btn-prefix-cls}-group-rtl & + & {
+      border-right-color: @btn-group-border;
+      &[disabled] {
+        border-right-color: @btn-default-border;
       }
     }
   }
@@ -124,21 +119,21 @@
   }
 
   // LTR -default
-  :not(.@{locale-prefix}) & {
-    &&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-      padding-left: 29px;
-      .@{iconfont-css-prefix} {
-        margin-left: -14px;
-      }
+  &&-loading:not(&-rtl):not(&-circle):not(&-circle-outline):not(&-icon-only) {
+    padding-left: 29px;
+    .@{iconfont-css-prefix} {
+      margin-left: -14px;
     }
-    &-sm&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-      padding-left: 24px;
-      .@{iconfont-css-prefix} {
-        margin-left: -17px;
-      }
+  }
+  &-sm&-loading:not(&-rtl):not(&-circle):not(&-circle-outline):not(&-icon-only) {
+    padding-left: 24px;
+    .@{iconfont-css-prefix} {
+      margin-left: -17px;
     }
+  }
 
-    // To ensure that a space will be placed between character and `Icon`.
+  // To ensure that a space will be placed between character and `Icon`.
+  &:not(&-rtl) {
     > .@{iconfont-css-prefix} + span,
     > span + .@{iconfont-css-prefix} {
       margin-left: 8px;
@@ -146,29 +141,32 @@
   }
 
   // RTL
-  .@{locale-prefix}-rtl :not(.@{locale-prefix}) & {
-    &&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-      padding-right: 29px;
-      .@{iconfont-css-prefix} {
-        margin-right: -14px;
-      }
+  &&-loading&-rtl:not(&-circle):not(&-circle-outline):not(&-icon-only) {
+    padding-right: 29px;
+    .@{iconfont-css-prefix} {
+      margin-right: -14px;
     }
-    &-sm&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-      padding-right: 24px;
-      .@{iconfont-css-prefix} {
-        margin-right: -17px;
-      }
+  }
+  &-sm&-loading&-rtl:not(&-circle):not(&-circle-outline):not(&-icon-only) {
+    padding-right: 24px;
+    .@{iconfont-css-prefix} {
+      margin-right: -17px;
     }
+  }
 
-    // To ensure that a space will be placed between character and `Icon`.
+  // To ensure that a space will be placed between character and `Icon`.
+  &-rtl {
     > .@{iconfont-css-prefix} + span,
     > span + .@{iconfont-css-prefix} {
       margin-right: 8px;
     }
   }
 
-  &-group {
-    .btn-group(@btn-prefix-cls);
+  &-group:not(&-group-rtl)&-group {
+    .btn-group-ltr(@btn-prefix-cls);
+  }
+  &-group-rtl&-group {
+    .btn-group-rtl(@btn-prefix-cls);
   }
 
   &:not(&-circle):not(&-circle-outline)&-icon-only {
