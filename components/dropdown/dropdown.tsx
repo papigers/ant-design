@@ -26,7 +26,6 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
     prefixCls: 'ant-dropdown',
     mouseEnterDelay: 0.15,
     mouseLeaveDelay: 0.1,
-    placement: 'bottomLeft',
   };
   static contextTypes = {
     isRtl: PropTypes.bool,
@@ -52,8 +51,14 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
     );
   }
 
+  getPlacement() {
+    const defaultPlacement = this.context.isRtl ? 'bottomRight' : 'bottomLeft';
+    return this.props.placement || defaultPlacement;
+  }
+
   render() {
     const { children, prefixCls, overlay: overlayElements, trigger, disabled } = this.props;
+    const { isRtl } = this.context;
 
     const child = React.Children.only(children);
     const overlay = React.Children.only(overlayElements);
@@ -65,13 +70,16 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
     // menu cannot be selectable in dropdown defaultly
     const selectable = overlay.props.selectable || false;
     const fixedModeOverlay = React.cloneElement(overlay, {
-      mode: 'vertical',
+      mode: isRtl ? 'vertical-right' : 'vertical',
       selectable,
     });
-    const overlayClassName =  this.context.isRtl ? `${prefixCls}-rtl` : '';
+    const overlayClassName =  isRtl ? `${prefixCls}-rtl` : '';
+    const placement = this.getPlacement();
+
     return (
       <RcDropdown
         {...this.props}
+        placement={placement}
         overlayClassName={overlayClassName}
         transitionName={this.getTransitionName()}
         trigger={disabled ? [] : trigger}

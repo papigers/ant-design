@@ -125,7 +125,6 @@
       }
       .@{dropdown-prefix-cls}-menu-submenu-arrow {
         position: absolute;
-        right: @padding-xs;
         &:after {
           font-family: "anticon" !important;
           font-style: normal;
@@ -136,8 +135,32 @@
       }
     }
 
-    &-submenu-title {
+    &:not(&-vertical-right) &-item,
+    &:not(&-vertical-right) &-submenu-title {
+      .@{dropdown-prefix-cls}-menu-submenu-arrow {
+        right: @padding-xs;
+      }
+    }
+
+    &&-vertical-right &-item,
+    &&-vertical-right &-submenu-title {
+      .@{dropdown-prefix-cls}-menu-submenu-arrow {
+        left: @padding-xs;
+        &:after {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &:not(&-vertical-right) &-submenu-title {
       padding-right: 26px;
+    }
+
+    &&-vertical-right &-submenu-title {
+      padding-left: 26px;
+    }
+
+    &-submenu-title {
       &:first-child,
       &:last-child {
         border-radius: 0;

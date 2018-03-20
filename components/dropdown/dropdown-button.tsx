@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../button';
 import { ButtonGroupProps } from '../button/button-group';
 import Icon from '../icon';
@@ -15,18 +16,28 @@ export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
 
 export default class DropdownButton extends React.Component<DropdownButtonProps, any> {
   static defaultProps = {
-    placement: 'bottomRight',
     type: 'default',
     prefixCls: 'ant-dropdown-button',
   };
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
+  getPlacement() {
+    const { placement } = this.props;
+    const defaultPlacement = !this.context.isRtl ? 'bottomRight' : 'bottomLeft';
+    return placement || defaultPlacement;
+  }
 
   render() {
     const {
       type, disabled, onClick, children,
       prefixCls, className, overlay, trigger, align,
-      visible, onVisibleChange, placement, getPopupContainer,
+      visible, onVisibleChange, getPopupContainer,
       ...restProps,
     } = this.props;
+
+    const placement = this.getPlacement();
 
     const dropdownProps = {
       align,
