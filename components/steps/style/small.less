@@ -1,8 +1,14 @@
 .@{steps-prefix-cls}-small {
-  &.@{steps-prefix-cls}-horizontal:not(.@{steps-prefix-cls}-label-vertical) .@{steps-prefix-cls}-item {
+  &.@{steps-prefix-cls}-horizontal:not(.@{steps-prefix-cls}-label-vertical.@{steps-prefix-cls}-rtl) .@{steps-prefix-cls}-item {
     margin-right: 12px;
     &:last-child {
       margin-right: 0;
+    }
+  }
+  &.@{steps-prefix-cls}-horizontal.@{steps-prefix-cls}-rtl:not(.@{steps-prefix-cls}-label-vertical) .@{steps-prefix-cls}-item {
+    margin-left: 12px;
+    &:last-child {
+      margin-left: 0;
     }
   }
   .@{steps-prefix-cls}-item-icon {
@@ -13,10 +19,16 @@
     border-radius: @steps-small-icon-size;
     font-size: @font-size-sm;
   }
+
+  &:not(.@{steps-prefix-cls}-rtl) .@{steps-prefix-cls}-item-title {
+    padding-right: 12px;
+  }
+  &.@{steps-prefix-cls}-rtl .@{steps-prefix-cls}-item-title {
+    padding-left: 12px;
+  }
   .@{steps-prefix-cls}-item-title {
     font-size: @font-size-base;
     line-height: @steps-small-icon-size;
-    padding-right: 12px;
     &:after {
       top: @steps-small-icon-size / 2;
     }

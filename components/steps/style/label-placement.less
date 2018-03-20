@@ -3,7 +3,6 @@
     overflow: visible;
     &-tail {
       padding: 0 24px;
-      margin-left: 48px;
     }
     &-content {
       display: block;
@@ -13,16 +12,37 @@
     }
     &-icon {
       display: inline-block;
+    }
+    &-title:after {
+      display: none;
+    }
+  }
+  &:not(.@{steps-prefix-cls}-rtl) {
+    &-tail {
+      margin-left: 48px;
+    }
+    &-icon {
       margin-left: 36px;
     }
     &-title {
       padding-right: 0;
-      &:after {
-        display: none;
-      }
     }
     &-description {
       text-align: left;
+    }
+  }
+  &.@{steps-prefix-cls}-rtl {
+    &-tail {
+      margin-right: 48px;
+    }
+    &-icon {
+      margin-right: 36px;
+    }
+    &-title {
+      padding-left: 0;
+    }
+    &-description {
+      text-align: right;
     }
   }
 }

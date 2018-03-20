@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import RcSteps from 'rc-steps';
+import classNames from 'classnames';
 
 export interface StepsProps {
   prefixCls?: string;
@@ -11,6 +12,7 @@ export interface StepsProps {
   direction?: 'horizontal' | 'vertical';
   progressDot?: boolean | Function;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 export default class Steps extends React.Component<StepsProps, any> {
@@ -28,9 +30,17 @@ export default class Steps extends React.Component<StepsProps, any> {
     current: PropTypes.number,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   render() {
+    const { className, ...props } = this.props;
+    const classes = classNames(className, {
+      [`${this.props.prefixCls}-rtl`]: this.context.isRtl,
+    });
     return (
-      <RcSteps {...this.props} />
+      <RcSteps className={classes} {...props} />
     );
   }
 }

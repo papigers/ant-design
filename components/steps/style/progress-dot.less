@@ -1,4 +1,51 @@
 .@{steps-prefix-cls}-dot {
+  &:not(.@{steps-prefix-cls}-rtl) {
+    .@{steps-prefix-cls}-item {
+      &-tail {
+        margin: 0 0 0 @steps-desciption-max-width / 2;
+        &:after {
+          margin-left: 12px;
+        }
+      }
+      &:first-child .@{steps-prefix-cls}-icon-dot {
+        left: 2px;
+      }
+      &-icon {
+        padding-right: 0;
+        margin-left: 67px;
+        .@{steps-prefix-cls}-icon-dot {
+          float: left;
+          &:after {
+            left: -26px;
+          }
+        }
+      }
+    }
+  }
+  &.@{steps-prefix-cls}-rtl {
+    .@{steps-prefix-cls}-item {
+      &-tail {
+        margin: 0 @steps-desciption-max-width / 2 0 0;
+
+        &:after {
+          margin-right: 12px;
+        }
+      }
+      &:first-child .@{steps-prefix-cls}-icon-dot {
+        right: 2px;
+      }
+      &-icon {
+        padding-left: 0;
+        margin-right: 67px;
+        .@{steps-prefix-cls}-icon-dot {
+          float: right;
+          &:after {
+            right: -26px;
+          }
+        }
+      }
+    }
+  }
   .@{steps-prefix-cls}-item {
     &-title {
       line-height: @line-height-base;
@@ -6,27 +53,19 @@
     &-tail {
       width: 100%;
       top: 2px;
-      margin: 0 0 0 @steps-desciption-max-width / 2;
       padding: 0;
       &:after {
         height: 3px;
         width: ~"calc(100% - 20px)";
-        margin-left: 12px;
       }
     }
-    &:first-child .@{steps-prefix-cls}-icon-dot {
-      left: 2px;
-    }
     &-icon {
-      padding-right: 0;
       width: @steps-dot-size;
       height: @steps-dot-size;
       line-height: @steps-dot-size;
       border: 0;
-      margin-left: 67px;
       background: transparent;
       .@{steps-prefix-cls}-icon-dot {
-        float: left;
         width: 100%;
         height: 100%;
         border-radius: 100px;
@@ -40,7 +79,6 @@
           height: 32px;
           position: absolute;
           top: -12px;
-          left: -26px;
         }
       }
     }
@@ -56,20 +94,40 @@
 }
 
 .@{steps-prefix-cls}-vertical.@{steps-prefix-cls}-dot {
+  &:not(.@{steps-prefix-cls}-rtl) {
+    .@{steps-prefix-cls}-item-icon {
+      margin-left: 0;
+    }
+    .@{steps-prefix-cls}-item-tail {
+      left: -9px;
+    }
+    .@{steps-prefix-cls}-item:first-child .@{steps-prefix-cls}-icon-dot {
+      left: 0;
+    }
+    .@{steps-prefix-cls}-item-process .@{steps-prefix-cls}-icon-dot {
+      left: -2px;
+    }
+  }
+  &.@{steps-prefix-cls}-rtl {
+    .@{steps-prefix-cls}-item-icon {
+      margin-right: 0;
+    }
+    .@{steps-prefix-cls}-item-tail {
+      right: -9px;
+    }
+    .@{steps-prefix-cls}-item:first-child .@{steps-prefix-cls}-icon-dot {
+      right: 0;
+    }
+    .@{steps-prefix-cls}-item-process .@{steps-prefix-cls}-icon-dot {
+      right: -2px;
+    }
+  }
   .@{steps-prefix-cls}-item-icon {
-    margin-left: 0;
     margin-top: 8px;
   }
   .@{steps-prefix-cls}-item-tail {
     margin: 0;
-    left: -9px;
     top: 2px;
     padding: 22px 0 4px;
-  }
-  .@{steps-prefix-cls}-item:first-child .@{steps-prefix-cls}-icon-dot {
-    left: 0;
-  }
-  .@{steps-prefix-cls}-item-process .@{steps-prefix-cls}-icon-dot {
-    left: -2px;
   }
 }
