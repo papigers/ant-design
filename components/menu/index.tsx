@@ -72,6 +72,7 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
   static contextTypes = {
     siderCollapsed: PropTypes.bool,
     collapsedWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    isRtl: PropTypes.bool,
   };
   switchModeFromInline: boolean;
   leaveAnimationExecutedWhenInlineCollapsed: boolean;
@@ -157,7 +158,9 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
       return 'inline';
     }
     const { mode } = this.props;
-    return inlineCollapsed ? 'vertical' : mode;
+    const { isRtl } = this.context;
+    const defaultMode = isRtl ? 'vertical-right' : 'vertical';
+    return inlineCollapsed || !mode ? defaultMode : mode;
   }
   getInlineCollapsed() {
     const { inlineCollapsed } = this.props;
@@ -215,6 +218,7 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
 
     const menuClassName = classNames(className, `${prefixCls}-${theme}`, {
       [`${prefixCls}-inline-collapsed`]: this.getInlineCollapsed(),
+      [`${prefixCls}-rtl`]: this.context.isRtl,
     });
 
     const menuProps: MenuProps = {

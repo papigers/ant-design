@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import RcDropdown from 'rc-dropdown';
 import classNames from 'classnames';
 import DropdownButton from './dropdown-button';
@@ -26,6 +27,9 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
     mouseEnterDelay: 0.15,
     mouseLeaveDelay: 0.1,
     placement: 'bottomLeft',
+  };
+  static contextTypes = {
+    isRtl: PropTypes.bool,
   };
 
   getTransitionName() {
@@ -64,9 +68,11 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
       mode: 'vertical',
       selectable,
     });
+    const overlayClassName =  this.context.isRtl ? `${prefixCls}-rtl` : '';
     return (
       <RcDropdown
         {...this.props}
+        overlayClassName={overlayClassName}
         transitionName={this.getTransitionName()}
         trigger={disabled ? [] : trigger}
         overlay={fixedModeOverlay}
