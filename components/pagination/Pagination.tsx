@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import RcPagination from 'rc-pagination';
 import enUS from 'rc-pagination/lib/locale/en_US';
 import classNames from 'classnames';
@@ -36,14 +37,22 @@ export default class Pagination extends React.Component<PaginationProps, {}> {
     prefixCls: 'ant-pagination',
     selectPrefixCls: 'ant-select',
   };
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
 
   renderPagination = (locale: PaginationLocale) => {
-    const { className, size, ...restProps } = this.props;
+    const { className, prefixCls, size, ...restProps } = this.props;
     const isSmall = size === 'small';
+    const classes = classNames(className, {
+      mini: isSmall,
+      [`${prefixCls}-rtl`]: this.context.isRtl,
+    });
     return (
       <RcPagination
         {...restProps}
-        className={classNames(className, { mini: isSmall })}
+        prefixCls={prefixCls}
+        className={classes}
         selectComponentClass={isSmall ? MiniSelect : Select}
         locale={locale}
       />

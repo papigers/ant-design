@@ -6,6 +6,7 @@
 
 .@{pagination-prefix-cls} {
   .reset-component;
+  direction: ltr;
 
   ul,
   ol {
@@ -332,6 +333,17 @@
       input {
         .input-sm;
         width: 44px;
+      }
+    }
+  }
+
+  &-rtl {
+    .@{pagination-prefix-cls}-options-quick-jumper {
+      direction: rtl;
+      margin-right: 8px;
+
+      input {
+        margin-left: 0;
       }
     }
   }
