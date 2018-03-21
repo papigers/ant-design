@@ -51,6 +51,10 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
     onChange: PropTypes.func,
   };
 
+  static contextTypes = {
+    isRtl: PropTypes.bool,
+  };
+
   static childContextTypes = {
     checkboxGroup: PropTypes.any,
   };
@@ -131,7 +135,9 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
       ));
     }
 
-    const classString = classNames(prefixCls, className);
+    const classString = classNames(prefixCls, className, {
+      [`${prefixCls}-rtl`]: this.context.isRtl,
+    });
     return (
       <div className={classString} style={style}>
         {children}

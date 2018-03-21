@@ -154,8 +154,16 @@
     line-height: unset;
     cursor: pointer;
     display: inline-block;
+  }
+
+  .@{checkbox-prefix-cls}:not(.@{checkbox-prefix-cls}-rtl) .@{checkbox-prefix-cls}-wrapper {
     & + & {
       margin-left: 8px;
+    }
+  }
+  .@{checkbox-prefix-cls}-rtl .@{checkbox-prefix-cls}-wrapper {
+    & + & {
+      margin-right: 8px;
     }
   }
 
@@ -170,13 +178,26 @@
     display: inline-block;
     &-item {
       display: inline-block;
+    }
+
+    &:not(&-rtl) &-item {
       margin-right: 8px;
       &:last-child {
         margin-right: 0;
       }
+      & + & {
+        margin-left: 0;
+      }
     }
-    &-item + &-item {
-      margin-left: 0;
+
+    &-rtl &-item {
+      margin-left: 8px;
+      &:last-child {
+        margin-left: 0;
+      }
+      & + & {
+        margin-right: 0;
+      }
     }
   }
 }
